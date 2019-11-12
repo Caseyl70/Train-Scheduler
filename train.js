@@ -22,12 +22,20 @@ $(document).ready(function () {
     }
 
     function nextTrain(freq, train) {
-        return ("placeHolder");
+        var now = moment().format("X") / 60; // unix minutes
+        var arrival = (minAway(freq, train) + now) * 60;
+
+        return (moment(arrival, "X").format("HH:mm"));
 
     }
 
     function minAway(freq, train) {
-        return ("placeHolder");
+        var frequency = parseInt(freq); // will gurentte we are working with a number.
+        var now = moment().format("X") / 60; // unix minutes
+        var firstTrain = moment(train, "HH:mm").format("X") / 60; // first train time in unix min
+        var diff = now - firstTrain; //difference between the train times
+        var modulus = diff % frequency; // give us current num
+        return Math.round(frequency - modulus); // inserting math.round to round up to not get decimal.
 
     }
 
