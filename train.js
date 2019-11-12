@@ -13,6 +13,24 @@ $(document).ready(function () {
     // Get a reference to the database service
     var database = firebase.database();
 
+    function populateTable(obj) {
+        for (var train in obj) {
+            var newTr = $("<tr>")
+            newTr.append(`<td>${train}</td><td>${obj[train].destination}</td><td>${obj[train].frequency}</td><td>${nextTrain(obj[train].frequency, obj[train].train)}</td><td>${minAway(obj[train].frequency, obj[train].train)}</td>`);
+            $("tBody").append(newTr);
+        }
+    }
+
+    function nextTrain(freq, train) {
+        return ("placeHolder");
+
+    }
+
+    function minAway(freq, train) {
+        return ("placeHolder");
+
+    }
+
     $("form").on("submit", function (event) {
         // event.preventDefault();
         var trainData = {
@@ -25,8 +43,8 @@ $(document).ready(function () {
         database.ref().child($("#train-name-input").val().trim()).set(trainData);
     });
 
-    database.ref().on("value", function(results){
-        console.log(results.val());
+    database.ref().on("value", function (results) {
+        populateTable(results.val());
     })
 
 
